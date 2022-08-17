@@ -5,12 +5,17 @@
 
 .header{
   font-style: oblique;
+  text-align: center;
 }
 
 .item{
   margin: 1%;
 }
 
+#checkbox{
+  margin-right: 1%
+}
+
 #edit{
-  margin-left: 2%;
+  margin-left: 1%;
 }

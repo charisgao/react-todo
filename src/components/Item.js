@@ -32,16 +32,18 @@ class Item extends Component {
 
   render() {
     const todoItem = this.props.todo;
+    let task = todoItem.name;
     let editField = null;
     if (this.state.edit) {
+        task = null
         editField = <input ref={this.editRef} type='text' value={todoItem.name} onChange={this.handleItemEdit}  onKeyDown={this.handleItemDone}/>
     }
     return (
       <div className="item">
-        <input type='checkbox' checked={todoItem.complete} onChange={this.handleItemClick}/>
-        {todoItem.name}
-        <button id="edit" onClick={this.handleItemEdit}>Edit</button>
+        <input id="checkbox" type='checkbox' checked={todoItem.complete} onChange={this.handleItemClick}/>
+        {task}
         {editField}
+        <button id="edit" onClick={this.handleItemEdit}>Edit</button>
       </div>
     )
   }
