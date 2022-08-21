@@ -13,15 +13,13 @@ class Item extends Component {
   }
 
   handleItemClick = () => {
-    const todoItem = this.props.todo
-    this.props.changeCheck(todoItem.id)
+    this.props.changeCheck(this.props.index)
   }
 
   handleItemEdit = () => {
-    const todoItem = this.props.todo
     this.setState({edit: true})
     const newItem = this.editRef.current.value
-    this.props.editItem(newItem, todoItem.id)
+    this.props.editItem(newItem, this.props.index)
   }
 
   handleItemDone = event => {
@@ -30,20 +28,35 @@ class Item extends Component {
     }
   }
 
+  handleUp = () => {
+    this.props.moveUp(this.props.index)
+  }
+
+  handleDown = () => {
+    this.props.moveDown(this.props.index)
+  }
+
   render() {
-    const todoItem = this.props.todo;
-    let task = todoItem.name;
-    let editField = null;
-    if (this.state.edit) {
-        task = null
-        editField = <input ref={this.editRef} type='text' value={todoItem.name} onChange={this.handleItemEdit}  onKeyDown={this.handleItemDone}/>
-    }
+    const {edit} = this.state
+    const {todo} = this.props;
     return (
       <div className="item">
-        <input id="checkbox" type='checkbox' checked={todoItem.complete} onChange={this.handleItemClick}/>
-        {task}
-        {editField}
+        <input id="checkbox" type='checkbox' checked={todo.complete} onChange={this.handleItemClick}/>
+        <p style={todo.complete ? {textDecoration: 'line-through'} : {}}>
+          {!edit && todo.name} 
+          {edit && 
+            <input 
+              ref={this.editRef} 
+              type='text' 
+              value={todo.name} 
+              onChange={this.handleItemEdit}
+              onKeyDown={this.handleItemDone}
+            />
+          }
+        </p>
         <button id="edit" onClick={this.handleItemEdit}>Edit</button>
+        <button onClick={this.handleUp}>Up</button>
+        <button onClick={this.handleDown}>Down</button>
       </div>
     )
   }
